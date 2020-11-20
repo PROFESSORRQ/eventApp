@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-
-import './loginfaculty.dart';
-
-
-
 final _formKey = GlobalKey<FormState>();
-//final  _key = GlobalKey<ScaffoldState>();
-class Login extends StatelessWidget {
- final TextEditingController _passcontroller = new TextEditingController();
+class LoginFaculty extends StatelessWidget {
+   final TextEditingController _passcontroller = new TextEditingController();
   final TextEditingController _namecontroller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -19,7 +13,7 @@ class Login extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
-            colors: [Colors.red.shade200,Colors.red.shade400]
+            colors: [Colors.red, Colors.cyan]
           )
         ),
         child: SingleChildScrollView(
@@ -29,7 +23,7 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              new SizedBox(height: MediaQuery.of(context).size.height*0.14,),
+              new SizedBox(height: MediaQuery.of(context).size.height*0.2,),
                new Container(
                  alignment: Alignment.center,
                  height: 150,
@@ -42,7 +36,7 @@ class Login extends StatelessWidget {
                ),
               new SizedBox(height: 20.000,),
                 Center(
-                  child: new Text("LOGIN AS STUDENT",
+                  child: new Text("LOGIN AS FACULTY",
                   style: new TextStyle(fontSize: 25, decoration: TextDecoration.underline, color: Colors.white, fontFamily: "Poppins",))
                 ),
 
@@ -56,9 +50,8 @@ class Login extends StatelessWidget {
                ),),
               new SizedBox(height: 30.0,),
               new Container(
-                height: MediaQuery.of(context).size.height*0.35,
+                height: MediaQuery.of(context).size.height*0.31,
                 width: MediaQuery.of(context).size.width*0.9,
-               
                 child: Column(
              children:[ Container(
                 height: 50.0,
@@ -84,7 +77,7 @@ class Login extends StatelessWidget {
                       controller: _namecontroller,
                       decoration: new InputDecoration(
                         border: InputBorder.none,
-                        labelText: "   Email",
+                        labelText: "Email",
                         labelStyle: TextStyle(
                           fontSize: 20,
                             color: Colors.white,
@@ -171,30 +164,6 @@ class Login extends StatelessWidget {
               ),
               new SizedBox(height: 20.0,),
              ])),
-              new InkWell(
-                child: new Center(child :  Text("Skip for now!", style: new TextStyle(color: Colors.white, fontFamily : "Poppins", fontSize: 18)),),
-                onTap: (){
-                  print("//skip and jump to main screen");
-                },
-              ),
-                new SizedBox(height: 20.0,),
-              new InkWell(
-                child: new Center(child: Text("Login as Faculty!", style: new TextStyle(color : Colors.white, fontFamily : "Poppins", fontSize: 18)),)
-                 ,
-                 onTap: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => LoginFaculty()));
-                 },),
-                 new SizedBox(height: 20.0,),
-              new InkWell(
-                child: new Center(child: Text("Login as Society !", style: new TextStyle(color : Colors.white, fontFamily : "Poppins", fontSize: 18)),)
-                 ,
-                 onTap: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => LoginFaculty()));
-                 },)
-                
-            ],),
-          ),
-        ),
-      ),
-    );
-  }}
+            ])))));
+  }
+}
