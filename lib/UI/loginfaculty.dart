@@ -13,7 +13,7 @@ class LoginFaculty extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
-            colors: [Colors.red, Colors.cyan]
+            colors: [Colors.purple.shade800, Colors.purple.shade200]
           )
         ),
         child: SingleChildScrollView(
@@ -48,7 +48,7 @@ class LoginFaculty extends StatelessWidget {
 
 
                ),),
-              new SizedBox(height: 30.0,),
+              new SizedBox(height: 10.0,),
               new Container(
                 height: MediaQuery.of(context).size.height*0.31,
                 width: MediaQuery.of(context).size.width*0.9,
@@ -69,7 +69,7 @@ class LoginFaculty extends StatelessWidget {
                     new CircleAvatar(
                       radius: 25.00,
                       backgroundColor: Colors.white,
-                      child: Icon(Icons.supervised_user_circle, color: Colors.redAccent,),
+                      child: Icon(Icons.supervised_user_circle, color: Colors.purpleAccent,),
                     ),
                     Expanded(
                       child: new TextFormField(
@@ -96,7 +96,7 @@ class LoginFaculty extends StatelessWidget {
                     ),]
                 ),
               ),
-              SizedBox(height: 30.0,),
+              SizedBox(height: 15.0,),
               Container(
 
                 height: 50.0,
@@ -114,7 +114,7 @@ class LoginFaculty extends StatelessWidget {
                     new CircleAvatar(
                       radius: 25.00,
                       backgroundColor: Colors.white,
-                      child: Icon(Icons.lock, color: Colors.redAccent,),
+                      child: Icon(Icons.lock, color: Colors.purpleAccent,),
                     ),
                     Expanded(
                       child: new TextFormField(
@@ -142,7 +142,7 @@ class LoginFaculty extends StatelessWidget {
                 ),
               ),
 
-              new SizedBox(height: 42.000,),
+              new SizedBox(height: 15.000,),
               SizedBox(
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
@@ -157,7 +157,7 @@ class LoginFaculty extends StatelessWidget {
 
                 child: new Text("PROCEED", style: new TextStyle(
                   fontSize: 20,
-                  color: Colors.redAccent,
+                  color: Colors.purpleAccent,
                  fontFamily : "Poppins"
                 ),),
                 color: Colors.white,),

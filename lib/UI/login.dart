@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './loginfaculty.dart';
+import './loginSociety.dart';
 
 
 
@@ -19,7 +20,7 @@ class Login extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
-            colors: [Colors.red.shade200,Colors.red.shade400]
+            colors: [Colors.red.shade400,Colors.red.shade200]
           )
         ),
         child: SingleChildScrollView(
@@ -54,19 +55,19 @@ class Login extends StatelessWidget {
 
 
                ),),
-              new SizedBox(height: 30.0,),
+              new SizedBox(height: 20.0,),
               new Container(
                 height: MediaQuery.of(context).size.height*0.35,
                 width: MediaQuery.of(context).size.width*0.9,
                
                 child: Column(
-             children:[ Container(
-                height: 50.0,
-                width: MediaQuery.of(context).size.width*0.85,
-                decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.circular(25.0),
-                    color: Colors.transparent,
-                  border: Border.all(
+                  children:[ Container(
+                       height: 50.0,
+                       width: MediaQuery.of(context).size.width*0.85,
+                      decoration: new BoxDecoration(
+                       borderRadius: BorderRadius.circular(25.0),
+                        color: Colors.transparent,
+                       border: Border.all(
                     color: Colors.white,
                     width: 0.5
                   )
@@ -103,7 +104,7 @@ class Login extends StatelessWidget {
                     ),]
                 ),
               ),
-              SizedBox(height: 30.0,),
+              SizedBox(height: 20.0,),
               Container(
 
                 height: 50.0,
@@ -149,7 +150,7 @@ class Login extends StatelessWidget {
                 ),
               ),
 
-              new SizedBox(height: 42.000,),
+              new SizedBox(height: 20.000,),
               SizedBox(
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
@@ -169,7 +170,7 @@ class Login extends StatelessWidget {
                 ),),
                 color: Colors.white,),
               ),
-              new SizedBox(height: 20.0,),
+              new SizedBox(height: 5.0,),
              ])),
               new InkWell(
                 child: new Center(child :  Text("Skip for now!", style: new TextStyle(color: Colors.white, fontFamily : "Poppins", fontSize: 18)),),
@@ -177,19 +178,19 @@ class Login extends StatelessWidget {
                   print("//skip and jump to main screen");
                 },
               ),
-                new SizedBox(height: 20.0,),
+                new SizedBox(height: 5.0,),
               new InkWell(
                 child: new Center(child: Text("Login as Faculty!", style: new TextStyle(color : Colors.white, fontFamily : "Poppins", fontSize: 18)),)
                  ,
                  onTap: (){
                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginFaculty()));
                  },),
-                 new SizedBox(height: 20.0,),
+                 new SizedBox(height: 5.0,),
               new InkWell(
                 child: new Center(child: Text("Login as Society !", style: new TextStyle(color : Colors.white, fontFamily : "Poppins", fontSize: 18)),)
                  ,
                  onTap: (){
-                   Navigator.push(context, MaterialPageRoute(builder: (context) => LoginFaculty()));
+                   Navigator.push(context, MaterialPageRoute(builder: (context) => LoginSociety()));
                  },)
                 
             ],),
