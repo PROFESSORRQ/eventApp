@@ -1,3 +1,4 @@
+import 'package:eventApp/views/FacultyView.dart';
 import 'package:flutter/material.dart';
 final _formKey = GlobalKey<FormState>();
 class LoginFaculty extends StatelessWidget {
@@ -147,8 +148,10 @@ class LoginFaculty extends StatelessWidget {
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
                 child: new RaisedButton(onPressed: (){
-                 // if(_formKey.currentState.validate()){
-                 // Navigator.push(context, MaterialPageRoute(builder: (context)=> Otp()));}
+            
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> FacultyView()
+                  
+                  ));
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),

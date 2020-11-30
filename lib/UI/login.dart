@@ -1,3 +1,4 @@
+import 'package:eventApp/views/StudentView.dart';
 import 'package:flutter/material.dart';
 
 import './loginfaculty.dart';
@@ -155,9 +156,9 @@ class Login extends StatelessWidget {
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
                 child: new RaisedButton(onPressed: (){
-                 // if(_formKey.currentState.validate()){
-                 // Navigator.push(context, MaterialPageRoute(builder: (context)=> Otp()));}
-                },
+                
+                 Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));}
+                ,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
 

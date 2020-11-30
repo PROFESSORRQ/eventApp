@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../views/Societyviews.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 final _formKey = GlobalKey<FormState>();
 class LoginSociety extends StatelessWidget {
   final TextEditingController _passcontroller = new TextEditingController();
@@ -147,9 +149,9 @@ class LoginSociety extends StatelessWidget {
                                       height: 50.0,
                                       width: MediaQuery.of(context).size.width*0.85,
                                       child: new RaisedButton(onPressed: (){
-                                        // if(_formKey.currentState.validate()){
-                                        // Navigator.push(context, MaterialPageRoute(builder: (context)=> Otp()));}
-                                      },
+                                   
+                                         Navigator.push(context, MaterialPageRoute(builder: (context)=> SocietyView()));}
+                                      ,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(25.0),
 
