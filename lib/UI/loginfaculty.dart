@@ -1,9 +1,16 @@
 import 'package:eventApp/views/FacultyView.dart';
 import 'package:flutter/material.dart';
 final _formKey = GlobalKey<FormState>();
-class LoginFaculty extends StatelessWidget {
+class LoginFaculty extends StatefulWidget {
+  @override
+  _LoginFacultyState createState() => _LoginFacultyState();
+}
+
+class _LoginFacultyState extends State<LoginFaculty> {
    final TextEditingController _passcontroller = new TextEditingController();
+
   final TextEditingController _namecontroller = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,9 +155,9 @@ class LoginFaculty extends StatelessWidget {
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
                 child: new RaisedButton(onPressed: (){
-            
+
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> FacultyView()
-                  
+
                   ));
                 },
                 shape: RoundedRectangleBorder(
