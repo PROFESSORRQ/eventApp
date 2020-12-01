@@ -27,15 +27,18 @@ class EventAdd extends StatelessWidget {
                        TextEditingController _snamecontroller = new TextEditingController();
               
      return Scaffold(
-       appBar: new AppBar(title: new Text("Add an event"),),
+       appBar: new AppBar(title: new Text("Add an event",style: new TextStyle(fontFamily: "Poppins"),),backgroundColor: Colors.greenAccent,shadowColor: Colors.blueGrey),
       body: Container(
         height: 1000,
         width: 500,
-         color: Colors.grey,child: new ListView(
+         color: Colors.white,child: new ListView(
       
           children: [
             new SizedBox(height: 10.0,),
-            new Text("Event Name",style: styleop,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new Text("Event Name",style: styleop,),
+            ),
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _namecontroller,
@@ -43,7 +46,10 @@ class EventAdd extends StatelessWidget {
               
               ),
             ),
-            new Text("Add Description",style: styleop,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new Text("Add Description",style: styleop,),
+            ),
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _desccontroller,
@@ -51,7 +57,10 @@ class EventAdd extends StatelessWidget {
               
               ),
             ),
-            new Text("Add Starting Date",style: styleop,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new Text("Add Starting Date",style: styleop,),
+            ),
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _sdatecontroller,
@@ -60,7 +69,10 @@ class EventAdd extends StatelessWidget {
               ),
 
             ),
-            new Text("Add ending Date",style: styleop,),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new Text("Add ending Date",style: styleop,),
+            ),
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _edatecontroller,
@@ -68,7 +80,10 @@ class EventAdd extends StatelessWidget {
               keyboardType: TextInputType.datetime,
               ),
             ),
-             new Text("Add SocietyName",style: styleop,),
+             Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: new Text("Add SocietyName",style: styleop,),
+             ),
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _snamecontroller,
@@ -77,14 +92,20 @@ class EventAdd extends StatelessWidget {
               ),
             ),
             
-             new Text("Add Location",style: styleop,),
+             Padding(
+               padding: const EdgeInsets.all(8.0),
+               child: new Text("Add Location",style: styleop,),
+             ),
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _loccontroller,
               autofocus: true,
               
               ),
-            ), new Text("Add Number of students",style: styleop,),
+            ), Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new Text("Add Number of students",style: styleop,),
+            ),
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _controller,
@@ -93,7 +114,7 @@ class EventAdd extends StatelessWidget {
               ),
             ),
             new SizedBox(height: 10.0),
-            new RaisedButton(onPressed: () {
+            new RaisedButton(child: new Text("Add"),onPressed: () {
              newEvent.title = _namecontroller.text;
              newEvent.desc = _desccontroller.text;
              newEvent.society_name = _snamecontroller.text;
@@ -112,5 +133,6 @@ class EventAdd extends StatelessWidget {
 
 TextStyle styleop = new TextStyle(
   fontFamily: "Poppins",
-  fontSize: 18
+  fontSize: 18,
+  fontWeight: FontWeight.bold
 );

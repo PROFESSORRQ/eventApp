@@ -1,20 +1,20 @@
 
+
+import 'package:eventApp/views/FacultyView3.dart';
 import 'package:flutter/material.dart';
-import '../models/event.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-
-class StudentView extends StatefulWidget {
+class EventRequest extends StatefulWidget {
   @override
-  _StudentViewState createState() => _StudentViewState();
+  _EventRequestState createState() => _EventRequestState();
 }
 
-class _StudentViewState extends State<StudentView> {
-   List eventss;
+class _EventRequestState extends State<EventRequest> {
+    List eventss;
   fetchData(){
     
     CollectionReference collectionReference = FirebaseFirestore.instance.collection('events');
-    collectionReference.where('eventPermi', isEqualTo: true).snapshots().listen((snapshots) { 
+    collectionReference.where('eventPermi', isEqualTo: false).snapshots().listen((snapshots) { 
       setState(() {
         eventss = snapshots.docs;
         print("${eventss[0]['eventName'].toString()}");
@@ -24,32 +24,20 @@ class _StudentViewState extends State<StudentView> {
      
    }
   
+  
   @override 
   void initState(){
     fetchData();
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-    //final newevent = new Event1(null,null,null,null,false,false,null,null,null);
     return Scaffold(
-      appBar: new AppBar(
-        backgroundColor: Colors.redAccent,
-        title: new Text("Events",
-        style : new TextStyle( fontFamily: "Poppins")),
-        // actions: [
-        //   new IconButton(icon: new Icon(Icons.add), onPressed: (){
-        //     Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
-        //   })
-        // ],
-      ),
-      
-      body: new Container(
+    body: new Container(
          height: 1100,
          width: 500,
         child: new Column(
-      children : [Text("Events Upcoming", style: new  TextStyle(color: Colors.redAccent, fontSize: 18, fontFamily: "Poppins"),),
+      children : [Text("Events Requests", style: new  TextStyle(color: Colors.indigo, fontSize: 18, fontFamily: "Poppins"),),
       // new RaisedButton(color: Colors.indigo,onPressed: (){ fetchData();}, child: new Text("fetchh")),
        Container(
           height: 600,
@@ -99,6 +87,7 @@ Widget builder(List event,BuildContext context){
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
+                                
                               new Text("${data['eventName']} by ${data['society']}",
                               style: new TextStyle(color: Colors.black87, fontSize: 16, fontFamily: "Poppins",fontWeight: FontWeight.bold)),
                               SizedBox(height: 10.0),
@@ -109,8 +98,8 @@ Widget builder(List event,BuildContext context){
                               SizedBox(height: 10.0),
                               Text("Location Booked : ${data['location']}",
                               style: new TextStyle(fontSize: 13, fontFamily: "Poppins"),),
-                              SizedBox(height: 10.0),
-                               new FlatButton(child: new Text("View Details >", style: new TextStyle(color: Colors.redAccent)),color: Colors.transparent, onPressed:(){
+                               SizedBox(height: 10.0),
+                               new FlatButton(child: new Text("View Details >", style: new TextStyle(color: Colors.deepPurpleAccent)),color: Colors.transparent, onPressed:(){
                                  showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -119,7 +108,7 @@ Widget builder(List event,BuildContext context){
                                       borderRadius:
                                           BorderRadius.circular(15.2)),
                                   title: new Text("${data['eventName']}",
-                                      style: new TextStyle(fontSize: 17, fontFamily:"Poppins",color: Colors.redAccent)),
+                                      style: new TextStyle(fontSize: 17, fontFamily:"Poppins",color: Colors.deepPurpleAccent)),
                                   children: <Widget>[
                                     new Divider(color: Colors.grey),
                                     Padding(
@@ -133,7 +122,7 @@ Widget builder(List event,BuildContext context){
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: new Text("Location alloted:", style:new TextStyle(fontWeight: FontWeight.bold, fontSize: 15, fontFamily : "Poppins")),
+                                      child: new Text("Location need:", style:new TextStyle(fontWeight: FontWeight.bold, fontSize: 15, fontFamily : "Poppins")),
                                     ),
                                     new Container(
                                       padding: new EdgeInsets.all(10.0),
@@ -151,27 +140,37 @@ Widget builder(List event,BuildContext context){
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: new Text("Event Permi Status: Allowed"),
+                                      child: new Text("Event Permi Status: Not Allowed"),
                                     ),
-                                    SizedBox(
-                                      height: 30,
-                                      width: 40 ,                              
-                                      child: new FlatButton(color :Colors.redAccent,child: new Text("Register"),onPressed: (){
-                                    
+                                   SizedBox(
+                                      height: 20,
+                                      width: 50 ,                              
+                                      child: new FlatButton(color :Colors.deepPurpleAccent,child: new Text("Give Permission"),onPressed: (){
+                                       updateData(index);
                                        
                                      },),
                                    )
-                                    ]);});})
+                                  ]);
+                                });})
+                              
                           ],
-           )])));
+           ),
+           new IconButton(icon: Icon(Icons.delete), onPressed: (){
+             deleteData(index);
+           },
+           color: Colors.red,),
+           ])));
          });
  }
 }
-Widget viewDetails(int number, List event){
-
- return  GestureDetector(
-child : new Text(" View Details >", style: TextStyle(fontFamily: "Poppins", color: Colors.blueAccent, fontWeight: FontWeight.bold)),
-//onTap:-
- );
- 
-}
+deleteData(int number)async{
+     CollectionReference collectionReference = FirebaseFirestore.instance.collection('events');
+       QuerySnapshot querySnapshot = await collectionReference.get();
+       querySnapshot.docs[number].reference.delete();
+   }
+    updateData(int number )async{
+       CollectionReference collectionReference = FirebaseFirestore.instance.collection('events');
+       QuerySnapshot querySnapshot = await collectionReference.get();
+      querySnapshot.docs[number].reference.update({"eventPermi": true, "spacePermi" : true});
+   }
+   

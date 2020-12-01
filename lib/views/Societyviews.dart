@@ -34,8 +34,9 @@ class _SocietyViewState extends State<SocietyView> {
     final newevent = new Event1(null,null,null,null,false,false,null,null,null);
     return Scaffold(
       appBar: new AppBar(
+        backgroundColor: Colors.greenAccent,
         title: new Text("Events",
-        style : new TextStyle(color: Colors.greenAccent, fontFamily: "Poppins")),
+        style : new TextStyle( fontFamily: "Poppins")),
         actions: [
           new IconButton(icon: new Icon(Icons.add), onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
@@ -46,7 +47,7 @@ class _SocietyViewState extends State<SocietyView> {
          height: 1100,
          width: 500,
         child: new Column(
-      children : [Text("Events Upcoming", style: new  TextStyle(color: Colors.indigo, fontSize: 28, fontFamily: "Poppins"),),
+      children : [Text("Events Upcoming", style: new  TextStyle(color: Colors.indigo, fontSize: 18, fontFamily: "Poppins"),),
       // new RaisedButton(color: Colors.indigo,onPressed: (){ fetchData();}, child: new Text("fetchh")),
        Container(
           height: 600,
@@ -97,7 +98,7 @@ Widget builder(List event,BuildContext context){
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                               new Text("${data['eventName']} by ${data['society']}",
-                              style: new TextStyle(color: Colors.black87, fontSize: 16, fontFamily: "Poppins",)),
+                              style: new TextStyle(color: Colors.black87, fontSize: 16, fontFamily: "Poppins",fontWeight: FontWeight.bold)),
                               SizedBox(height: 10.0),
                               new Text("Start Date : ${data['startDate']} and End Date: ${data['endDate']} ",
                               style: new TextStyle(
@@ -105,7 +106,59 @@ Widget builder(List event,BuildContext context){
                               )),
                               SizedBox(height: 10.0),
                               Text("Location Booked : ${data['location']}",
-                              style: new TextStyle(fontSize: 13, fontFamily: "Poppins"),)
+                              style: new TextStyle(fontSize: 13, fontFamily: "Poppins"),),
+                                new FlatButton(child: new Text("View Details >", style: new TextStyle(color: Colors.greenAccent)),color: Colors.transparent, onPressed:(){
+                                 showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return SimpleDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(15.2)),
+                                  title: new Text("${data['eventName']}",
+                                      style: new TextStyle(fontSize: 17, fontFamily:"Poppins",color: Colors.greenAccent)),
+                                  children: <Widget>[
+                                    new Divider(color: Colors.grey),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: new Text("About Event", style:new TextStyle(fontWeight: FontWeight.bold, fontSize: 15, fontFamily : "Poppins")),
+                                    ),
+                                    new Container(
+                                      padding: new EdgeInsets.all(10.0),
+                                      child: new Text("${data['description']}", style: new TextStyle(color: Colors.black, fontSize: 12))
+                                         
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: new Text("Location need:", style:new TextStyle(fontWeight: FontWeight.bold, fontSize: 15, fontFamily : "Poppins")),
+                                    ),
+                                    new Container(
+                                      padding: new EdgeInsets.all(10.0),
+                                      child: new Text("${data['location']}", style: new TextStyle(color: Colors.black, fontSize: 12))
+                                         
+                                    ),
+                                     Padding(
+                                       padding: const EdgeInsets.all(8.0),
+                                       child: new Text("Students Strength(approx):", style:new TextStyle(fontWeight: FontWeight.bold, fontSize: 15, fontFamily : "Poppins")),
+                                     ),
+                                    new Container(
+                                      padding: new EdgeInsets.all(10.0),
+                                      child: new Text("${data['studentNumber']}", style: new TextStyle(color: Colors.black, fontSize: 12))
+                                         
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: new Text("Event Permi Status: Allowed"),
+                                    ),
+                                  //   SizedBox(
+                                  //     height: 20,
+                                  //     width: 50 ,                              
+                                  //     child: new RaisedButton(color :Colors.redAccent,child: new Text("Register"),onPressed: (){
+                                    
+                                       
+                                  //    },),
+                                  //  )
+                                    ]);});})
                           ],
            )])));
          });
