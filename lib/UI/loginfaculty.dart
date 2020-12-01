@@ -1,5 +1,7 @@
 import 'package:eventApp/views/FacultyView.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 final _formKey = GlobalKey<FormState>();
 class LoginFaculty extends StatefulWidget {
   @override
@@ -12,6 +14,9 @@ class _LoginFacultyState extends State<LoginFaculty> {
   final TextEditingController _namecontroller = new TextEditingController();
 
   @override
+  final _firestore = FirebaseFirestore.instance;
+   String email;
+   String password;
   Widget build(BuildContext context) {
     return Scaffold(
 
@@ -94,6 +99,11 @@ class _LoginFacultyState extends State<LoginFaculty> {
                         contentPadding: EdgeInsets.fromLTRB(70, 0.0, 100, 0.0)
 
                       ),
+                        onChanged: (value){
+                          setState((){
+                            email = value;
+                          });
+                        },
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Please enter some text';
@@ -138,6 +148,11 @@ class _LoginFacultyState extends State<LoginFaculty> {
                             ),
                             contentPadding: EdgeInsets.fromLTRB(67, 0.0, 100, 0.0)
                         ),
+                        onChanged: (value){
+                          setState((){
+                            password   = value;
+                          });
+                        },
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter some text';
@@ -155,10 +170,16 @@ class _LoginFacultyState extends State<LoginFaculty> {
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
                 child: new RaisedButton(onPressed: (){
+                  FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email,
+                      password: password)
+                      .then((FirebaseUser) {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> FacultyView()));
+                  })
+                      .catchError((e){
+                    print(e);
+                  });
 
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> FacultyView()
-
-                  ));
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),

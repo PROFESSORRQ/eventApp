@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../views/Societyviews.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 final _formKey = GlobalKey<FormState>();
 class LoginSociety extends StatefulWidget {
   @override
@@ -13,6 +15,9 @@ class _LoginSocietyState extends State<LoginSociety> {
   final TextEditingController _namecontroller = new TextEditingController();
 
   @override
+  final _firestore = FirebaseFirestore.instance;
+  String email;
+  String password;
   Widget build(BuildContext context) {
     return Scaffold(
 
@@ -95,6 +100,11 @@ class _LoginSocietyState extends State<LoginSociety> {
                                                   contentPadding: EdgeInsets.fromLTRB(70, 0.0, 100, 0.0)
 
                                               ),
+                                              onChanged: (value){
+                                                setState((){
+                                                  email = value;
+                                                });
+                                              },
                                               validator: (value) {
                                                 if (value.isEmpty) {
                                                   return 'Please enter some text';
@@ -139,6 +149,11 @@ class _LoginSocietyState extends State<LoginSociety> {
                                                   ),
                                                   contentPadding: EdgeInsets.fromLTRB(67, 0.0, 100, 0.0)
                                               ),
+                                              onChanged: (value){
+                                                setState((){
+                                                  password   = value;
+                                                });
+                                              },
                                               validator: (value) {
                                                 if (value.isEmpty) {
                                                   return 'Please enter some text';
@@ -156,8 +171,16 @@ class _LoginSocietyState extends State<LoginSociety> {
                                       height: 50.0,
                                       width: MediaQuery.of(context).size.width*0.85,
                                       child: new RaisedButton(onPressed: (){
-
-                                         Navigator.push(context, MaterialPageRoute(builder: (context)=> SocietyView()));}
+                                        FirebaseAuth.instance.signInWithEmailAndPassword(
+                                            email: email,
+                                            password: password)
+                                            .then((FirebaseUser) {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> SocietyView()));
+                                        })
+                                            .catchError((e){
+                                          print(e);
+                                        });
+                                         }
                                       ,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(25.0),

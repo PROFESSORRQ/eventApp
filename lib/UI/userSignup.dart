@@ -1,5 +1,8 @@
 import 'package:eventApp/views/StudentView.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 final _formKey = GlobalKey<FormState>();
 class SignUp extends StatefulWidget {
   @override
@@ -12,9 +15,11 @@ class _SignUpState extends State<SignUp> {
   final TextEditingController _namecontroller = new TextEditingController();
 
   @override
+//  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
+
   String email;
   String password;
-
   Widget build(BuildContext context) {
     return Scaffold(
 
@@ -167,12 +172,44 @@ class _SignUpState extends State<SignUp> {
                                     SizedBox(
                                       height: 50.0,
                                       width: MediaQuery.of(context).size.width*0.85,
-                                      child: new RaisedButton(onPressed: (){
+                                      child: new RaisedButton(
+//                                        onPressed: ()async{
+//
+////                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+//
+//                                      try{
+//                                        final newuser=await _auth.createUserWithEmailAndPassword(
+//                                            email: email,
+//                                            password: password);
+//                                        if(newuser!=null){
+//                                         // Navigator.pushNamed(context, )
+//                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+//                                        }
+//                                      }catch(e){
+//                                        print(e);
+//                                      }
+//                                      },
+                                        onPressed: (){
+                                            FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                                email: email, password: password)
+                                           .then((signedInUser){
+                                             _firestore.collection('users')
+                                             .add({'email': email,'pass': password,})
+                                              .then((value){
+                                                if(signedInUser!=null){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+                                              }
+                                              })
+                                              .catchError((e){
+                                                print(e);
+                                              })
+                                              ;}
+                                              )
+                                                .catchError((e){
+                                               print(e);
+                                           });
 
-                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()
-
-                                        ));
-                                      },
+                                        },
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(25.0),
 

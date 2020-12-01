@@ -1,6 +1,7 @@
 import 'package:eventApp/views/StudentView.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import './loginfaculty.dart';
 import './loginSociety.dart';
 import './userSignup.dart';
@@ -20,7 +21,7 @@ class _LoginState extends State<Login> {
   final TextEditingController _namecontroller = new TextEditingController();
 
   @override
-
+  final _firestore = FirebaseFirestore.instance;
   String email;
   String password;
   Widget build(BuildContext context) {
@@ -178,8 +179,17 @@ class _LoginState extends State<Login> {
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
                 child: new RaisedButton(onPressed: (){
-
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));}
+                        FirebaseAuth.instance.signInWithEmailAndPassword(
+                              email: email,
+                               password: password)
+                              .then((FirebaseUser) {
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+                                    })
+                             .catchError((e){
+                                 print(e);
+                            });
+                 //Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+                 }
                 ,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
