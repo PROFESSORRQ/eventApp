@@ -1,4 +1,5 @@
 import 'package:eventApp/UI/eventadd.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../models/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -40,7 +41,19 @@ class _SocietyViewState extends State<SocietyView> {
         actions: [
           new IconButton(icon: new Icon(Icons.add), onPressed: (){
             Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
-          })
+          }
+          ),
+          new IconButton(icon: new Icon(Icons.logout), onPressed: (){
+           // Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
+            FirebaseAuth.instance.signOut()
+                .then((value){
+                  Navigator.pop(context);
+            })
+                .catchError((e){
+                  print(e);
+            });
+          }
+          ),
         ],
       ),
       body: new Container(
@@ -85,8 +98,8 @@ Widget builder(List event,BuildContext context){
                            Padding(
                               padding: EdgeInsets.only(top: 20.0, left: 5.0),
                               child: Container(
-                                width: 120.0,
-                                height: 120.0,
+                                width: 100.0,
+                                height: 100.0,
                                 child: Image.asset(
                                   "images/thapar.png",
                                   fit: BoxFit.cover,
@@ -159,8 +172,6 @@ Widget builder(List event,BuildContext context){
                                   //     height: 20,
                                   //     width: 50 ,                              
                                   //     child: new RaisedButton(color :Colors.redAccent,child: new Text("Register"),onPressed: (){
-                                    
-                                       
                                   //    },),
                                   //  )
                                     ]);});})

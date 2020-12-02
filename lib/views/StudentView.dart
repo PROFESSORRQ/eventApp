@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import '../models/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 
 class StudentView extends StatefulWidget {
   @override
@@ -38,11 +38,19 @@ class _StudentViewState extends State<StudentView> {
         backgroundColor: Colors.redAccent,
         title: new Text("Events",
         style : new TextStyle( fontFamily: "Poppins")),
-        // actions: [
-        //   new IconButton(icon: new Icon(Icons.add), onPressed: (){
-        //     Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
-        //   })
-        // ],
+         actions: [
+           new IconButton(icon: new Icon(Icons.logout), onPressed: (){
+             // Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
+             FirebaseAuth.instance.signOut()
+                 .then((value){
+               Navigator.pop(context);
+             })
+                 .catchError((e){
+               print(e);
+             });
+           }
+           ),
+         ],
       ),
       
       body: new Container(
@@ -87,8 +95,8 @@ Widget builder(List event,BuildContext context){
                            Padding(
                               padding: EdgeInsets.only(top: 20.0, left: 5.0),
                               child: Container(
-                                width: 120.0,
-                                height: 120.0,
+                                width: 100.0,
+                                height: 100.0,
                                 child: Image.asset(
                                   "images/thapar.png",
                                   fit: BoxFit.cover,

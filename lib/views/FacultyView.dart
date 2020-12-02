@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import './FacultyView1.dart';
 import './facultyView2.dart';
 
@@ -37,11 +37,19 @@ class _FacultyViewState extends State<FacultyView> {
         backgroundColor: Colors.deepPurpleAccent,
         title: new Text("Events",
         style : new TextStyle(color: Colors.greenAccent, fontFamily: "Poppins")),
-        // actions: [
-        //   new IconButton(icon: new Icon(Icons.add), onPressed: (){
-        //     Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
-        //   })
-        // ],
+         actions: [
+           new IconButton(icon: new Icon(Icons.logout), onPressed: (){
+             // Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
+             FirebaseAuth.instance.signOut()
+                 .then((value){
+               Navigator.pop(context);
+             })
+                 .catchError((e){
+               print(e);
+             });
+           }
+           ),
+         ],
       ),
       body: buildPageView(),
       bottomNavigationBar: BottomNavigationBar(

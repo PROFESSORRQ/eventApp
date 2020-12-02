@@ -45,7 +45,7 @@ class _LoginSocietyState extends State<LoginSociety> {
                             child: new Image.asset("images/thapar.png",
                                 height: 125,
                                 width: 125,
-                                fit: BoxFit.fill
+                                fit: BoxFit.fill,
                             ),
                           ),
                           new SizedBox(height: 10.000,),

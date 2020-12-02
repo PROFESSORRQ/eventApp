@@ -71,8 +71,8 @@ Widget builder(List event,BuildContext context){
                            Padding(
                               padding: EdgeInsets.only(top: 20.0, left: 5.0),
                               child: Container(
-                                width: 115.0,
-                                height: 115.0,
+                                width: 100.0,
+                                height: 100.0,
                                 child: Image.asset(
                                   "images/thapar.png",
                                   fit: BoxFit.cover,
