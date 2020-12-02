@@ -1,21 +1,23 @@
+import 'package:eventApp/views/StudentView.dart';
 import 'package:flutter/material.dart';
-import '../views/Societyviews.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _formKey = GlobalKey<FormState>();
-class LoginSociety extends StatefulWidget {
+class SignUp extends StatefulWidget {
   @override
-  _LoginSocietyState createState() => _LoginSocietyState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _LoginSocietyState extends State<LoginSociety> {
+class _SignUpState extends State<SignUp> {
   final TextEditingController _passcontroller = new TextEditingController();
 
   final TextEditingController _namecontroller = new TextEditingController();
 
   @override
+//  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
+
   String email;
   String password;
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class _LoginSocietyState extends State<LoginSociety> {
                 gradient: LinearGradient(
                     begin: Alignment.bottomLeft,
                     end: Alignment.topRight,
-                    colors: [Colors.green.shade800, Colors.green.shade200]
+                    colors: [Colors.yellow.shade800, Colors.yellow.shade200]
                 )
             ),
             child: SingleChildScrollView(
@@ -48,9 +50,9 @@ class _LoginSocietyState extends State<LoginSociety> {
                                 fit: BoxFit.fill
                             ),
                           ),
-                          new SizedBox(height: 10.000,),
+                          new SizedBox(height: 20.000,),
                           Center(
-                              child: new Text("LOGIN AS SOCIETY",
+                              child: new Text("Sign Up",
                                   style: new TextStyle(fontSize: 25, decoration: TextDecoration.underline, color: Colors.white, fontFamily: "Poppins",))
                           ),
 
@@ -62,7 +64,7 @@ class _LoginSocietyState extends State<LoginSociety> {
 
 
                             ),),
-                          new SizedBox(height: 30.0,),
+                          new SizedBox(height: 10.0,),
                           new Container(
                               height: MediaQuery.of(context).size.height*0.31,
                               width: MediaQuery.of(context).size.width*0.9,
@@ -83,7 +85,7 @@ class _LoginSocietyState extends State<LoginSociety> {
                                           new CircleAvatar(
                                             radius: 25.00,
                                             backgroundColor: Colors.white,
-                                            child: Icon(Icons.supervised_user_circle, color: Colors.greenAccent,),
+                                            child: Icon(Icons.supervised_user_circle, color: Colors.black,),
                                           ),
                                           Expanded(
                                             child: new TextFormField(
@@ -133,7 +135,7 @@ class _LoginSocietyState extends State<LoginSociety> {
                                           new CircleAvatar(
                                             radius: 25.00,
                                             backgroundColor: Colors.white,
-                                            child: Icon(Icons.lock, color: Colors.greenAccent,),
+                                            child: Icon(Icons.lock, color: Colors.black,),
                                           ),
                                           Expanded(
                                             child: new TextFormField(
@@ -170,26 +172,52 @@ class _LoginSocietyState extends State<LoginSociety> {
                                     SizedBox(
                                       height: 50.0,
                                       width: MediaQuery.of(context).size.width*0.85,
-                                      child: new RaisedButton(onPressed: (){
-                                        FirebaseAuth.instance.signInWithEmailAndPassword(
-                                            email: email,
-                                            password: password)
-                                            .then((FirebaseUser) {
-                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> SocietyView()));
-                                        })
-                                            .catchError((e){
-                                          print(e);
-                                        });
-                                         }
-                                      ,
+                                      child: new RaisedButton(
+//                                        onPressed: ()async{
+//
+////                                        Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+//
+//                                      try{
+//                                        final newuser=await _auth.createUserWithEmailAndPassword(
+//                                            email: email,
+//                                            password: password);
+//                                        if(newuser!=null){
+//                                         // Navigator.pushNamed(context, )
+//                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+//                                        }
+//                                      }catch(e){
+//                                        print(e);
+//                                      }
+//                                      },
+                                        onPressed: (){
+                                            FirebaseAuth.instance.createUserWithEmailAndPassword(
+                                                email: email, password: password)
+                                           .then((signedInUser){
+                                             _firestore.collection('users')
+                                             .add({'email': email,'pass': password,})
+                                              .then((value){
+                                                if(signedInUser!=null){
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+                                              }
+                                              })
+                                              .catchError((e){
+                                                print(e);
+                                              })
+                                              ;}
+                                              )
+                                                .catchError((e){
+                                               print(e);
+                                           });
+
+                                        },
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(25.0),
 
                                         ),
 
-                                        child: new Text("PROCEED", style: new TextStyle(
+                                        child: new Text("REGISTER", style: new TextStyle(
                                             fontSize: 20,
-                                            color: Colors.greenAccent,
+                                            color: Colors.black,
                                             fontFamily : "Poppins"
                                         ),),
                                         color: Colors.white,),

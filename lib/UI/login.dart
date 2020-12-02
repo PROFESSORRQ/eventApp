@@ -1,17 +1,29 @@
 import 'package:eventApp/views/StudentView.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import './loginfaculty.dart';
 import './loginSociety.dart';
-
-
+import './userSignup.dart';
 
 final _formKey = GlobalKey<FormState>();
 //final  _key = GlobalKey<ScaffoldState>();
-class Login extends StatelessWidget {
- final TextEditingController _passcontroller = new TextEditingController();
-  final TextEditingController _namecontroller = new TextEditingController();
+class Login extends StatefulWidget {
+
+
   @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+ final TextEditingController _passcontroller = new TextEditingController();
+
+  final TextEditingController _namecontroller = new TextEditingController();
+
+  @override
+  final _firestore = FirebaseFirestore.instance;
+  String email;
+  String password;
   Widget build(BuildContext context) {
     return Scaffold(
 
@@ -31,7 +43,7 @@ class Login extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              new SizedBox(height: MediaQuery.of(context).size.height*0.14,),
+              new SizedBox(height: MediaQuery.of(context).size.height*0.05,),
                new Container(
                  alignment: Alignment.center,
                  height: 150,
@@ -60,7 +72,7 @@ class Login extends StatelessWidget {
               new Container(
                 height: MediaQuery.of(context).size.height*0.35,
                 width: MediaQuery.of(context).size.width*0.9,
-               
+
                 child: Column(
                   children:[ Container(
                        height: 50.0,
@@ -92,9 +104,15 @@ class Login extends StatelessWidget {
                             color: Colors.white,
                             fontFamily: "Poppins"
                         ),
+
                         contentPadding: EdgeInsets.fromLTRB(70, 0.0, 100, 0.0)
 
                       ),
+    onChanged: (value){
+                          setState((){
+                            email = value;
+                          });
+                      },
                       validator: (value) {
                         if (value.isEmpty) {
                           return 'Please enter some text';
@@ -139,6 +157,11 @@ class Login extends StatelessWidget {
                             ),
                             contentPadding: EdgeInsets.fromLTRB(67, 0.0, 100, 0.0)
                         ),
+                        onChanged: (value){
+                              setState((){
+                                password   = value;
+                              });
+                              },
                         validator: (value) {
                           if (value.isEmpty) {
                             return 'Please enter some text';
@@ -156,8 +179,17 @@ class Login extends StatelessWidget {
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
                 child: new RaisedButton(onPressed: (){
-                
-                 Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));}
+                        FirebaseAuth.instance.signInWithEmailAndPassword(
+                              email: email,
+                               password: password)
+                              .then((FirebaseUser) {
+                               Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+                                    })
+                             .catchError((e){
+                                 print(e);
+                            });
+                 //Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+                 }
                 ,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25.0),
@@ -179,7 +211,12 @@ class Login extends StatelessWidget {
                   print("//skip and jump to main screen");
                 },
               ),
-                new SizedBox(height: 5.0,),
+                new SizedBox(height: 5.0,),new InkWell(
+                child: new Center(child: Text("Sign Up", style: new TextStyle(color : Colors.white, fontFamily : "Poppins", fontSize: 18)),)
+                ,
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => SignUp()));
+                },),
               new InkWell(
                 child: new Center(child: Text("Login as Faculty!", style: new TextStyle(color : Colors.white, fontFamily : "Poppins", fontSize: 18)),)
                  ,
@@ -193,7 +230,7 @@ class Login extends StatelessWidget {
                  onTap: (){
                    Navigator.push(context, MaterialPageRoute(builder: (context) => LoginSociety()));
                  },)
-                
+
             ],),
           ),
         ),
