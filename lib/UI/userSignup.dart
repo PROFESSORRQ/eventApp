@@ -1,9 +1,14 @@
+import 'package:eventApp/UI/login.dart';
+import 'package:eventApp/UI/loginSociety.dart';
+import 'package:eventApp/UI/loginfaculty.dart';
 import 'package:eventApp/views/StudentView.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final _formKey = GlobalKey<FormState>();
+class Keys{
+  static final key = const Key('key1');
+}
 class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
@@ -17,7 +22,7 @@ class _SignUpState extends State<SignUp> {
   @override
 //  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
-
+  String dropValue= "Student";
   String email;
   String password;
   Widget build(BuildContext context) {
@@ -34,7 +39,7 @@ class _SignUpState extends State<SignUp> {
             ),
             child: SingleChildScrollView(
                 child: Form(
-                    key: _formKey,
+                    key: Keys.key,
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,7 +71,7 @@ class _SignUpState extends State<SignUp> {
                             ),),
                           new SizedBox(height: 10.0,),
                           new Container(
-                              height: MediaQuery.of(context).size.height*0.31,
+                              height: MediaQuery.of(context).size.height*0.35,
                               width: MediaQuery.of(context).size.width*0.9,
                               child: Column(
                                   children:[ Container(
@@ -169,6 +174,31 @@ class _SignUpState extends State<SignUp> {
                                     ),
 
                                     new SizedBox(height: 15.000,),
+                                    new Text("Select type", style: TextStyle(
+                                      fontSize: 20,
+                                    color: Colors.white,
+                                     fontFamily: "Poppins"
+                                    ),),
+                                    new SizedBox(height: 4.5),
+                                    DropdownButton(
+                                      value: dropValue,
+                                      icon: Icon(Icons.arrow_drop_down),
+                                      iconSize: 20,
+                                      elevation: 14,
+                                      style: TextStyle(color: Colors.black),
+                                     
+                                      
+                                      items: <String>['Student','Faculty','Society'].map<DropdownMenuItem<String>>((String value){
+                                             return DropdownMenuItem<String>(
+                                               value: value,
+                                               child: Text(value),
+                                             );
+                                      }).toList(), 
+                                      onChanged: (String newvalue){
+                                        setState(() {
+                                          dropValue = newvalue;
+                                        });
+                                      }),
                                     SizedBox(
                                       height: 50.0,
                                       width: MediaQuery.of(context).size.width*0.85,
@@ -196,8 +226,18 @@ class _SignUpState extends State<SignUp> {
                                              _firestore.collection('users')
                                              .add({'email': email,'pass': password,})
                                               .then((value){
-                                                if(signedInUser!=null){
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+                                                
+                                                if(signedInUser!=null && dropValue == "Student"){
+                                            //      showAlertDialog(context);
+                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> Login()));
+                                              }
+                                              else if(signedInUser!=null && dropValue == "Faculty"){
+                                              
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginFaculty()));
+                                              }
+                                              else if(signedInUser!=null && dropValue == "Society"){
+                                               
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=> LoginSociety()));
                                               }
                                               })
                                               .catchError((e){
@@ -227,3 +267,28 @@ class _SignUpState extends State<SignUp> {
                         ])))));
   }
 }
+// showAlertDialog(BuildContext context) {
+
+//   // set up the button
+//   Widget okButton = FlatButton(
+//     child: Text("OK"),
+//     onPressed: () { Navigator.pop(context); },
+//   );
+
+//   // set up the AlertDialog
+//   AlertDialog alert = AlertDialog(
+//     title: Text("Account Confirmation", style: TextStyle(color: Colors.yellowAccent, fontFamily: "Poppins",)),
+//     content: Text("Your account has been registered successfully!",style: TextStyle( fontFamily: "Poppins",)),
+//     actions: [
+//       okButton,
+//     ],
+//   );
+
+//   // show the dialog
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return alert;
+//     },
+//   );
+// }

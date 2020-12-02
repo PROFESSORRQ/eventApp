@@ -41,7 +41,7 @@ class _EventRequestState extends State<EventRequest> {
       // new RaisedButton(color: Colors.indigo,onPressed: (){ fetchData();}, child: new Text("fetchh")),
        Container(
           height: 600,
-          width: 500,
+          width: 600,
           child: builder(eventss, context),
        )
       ]
@@ -75,8 +75,8 @@ Widget builder(List event,BuildContext context){
                            Padding(
                               padding: EdgeInsets.only(top: 20.0, left: 5.0),
                               child: Container(
-                                width: 120.0,
-                                height: 120.0,
+                                width: 110.0,
+                                height: 110.0,
                                 child: Image.asset(
                                   "images/thapar.png",
                                   fit: BoxFit.cover,

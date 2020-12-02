@@ -47,7 +47,7 @@ class _SocietyViewState extends State<SocietyView> {
          height: 1100,
          width: 500,
         child: new Column(
-      children : [Text("Events Upcoming", style: new  TextStyle(color: Colors.indigo, fontSize: 18, fontFamily: "Poppins"),),
+      children : [Text("Events Upcoming", style: new  TextStyle(color: Colors.greenAccent, fontSize: 18, fontFamily: "Poppins"),),
       // new RaisedButton(color: Colors.indigo,onPressed: (){ fetchData();}, child: new Text("fetchh")),
        Container(
           height: 600,

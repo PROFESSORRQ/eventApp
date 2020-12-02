@@ -137,6 +137,7 @@ class _LoginSocietyState extends State<LoginSociety> {
                                           ),
                                           Expanded(
                                             child: new TextFormField(
+                                              obscureText: true,
                                               textAlign: TextAlign.center,
                                               controller: _passcontroller,
                                               decoration: new InputDecoration(

@@ -135,7 +135,9 @@ class _LoginFacultyState extends State<LoginFaculty> {
                       child: Icon(Icons.lock, color: Colors.purpleAccent,),
                     ),
                     Expanded(
+                      
                       child: new TextFormField(
+                           obscureText: true,
                         textAlign: TextAlign.center,
                         controller: _passcontroller,
                         decoration: new InputDecoration(

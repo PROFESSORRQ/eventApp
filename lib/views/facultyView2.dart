@@ -37,7 +37,7 @@ class _EventAcceptedState extends State<EventAccepted> {
       // new RaisedButton(color: Colors.indigo,onPressed: (){ fetchData();}, child: new Text("fetchh")),
        Container(
           height: 600,
-          width: 500,
+          width: 600,
           child: builder(eventss, context),
        )
       ]
@@ -63,7 +63,7 @@ Widget builder(List event,BuildContext context){
            data = event[index].data();
            return Container(
                       margin: EdgeInsets.all(5.0),
-                      height: 180,
+                      height: 200,
                       child: Card(
                         elevation: 20,
                         child: Row(
@@ -71,8 +71,8 @@ Widget builder(List event,BuildContext context){
                            Padding(
                               padding: EdgeInsets.only(top: 20.0, left: 5.0),
                               child: Container(
-                                width: 120.0,
-                                height: 120.0,
+                                width: 115.0,
+                                height: 115.0,
                                 child: Image.asset(
                                   "images/thapar.png",
                                   fit: BoxFit.cover,

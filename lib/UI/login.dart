@@ -6,7 +6,9 @@ import './loginfaculty.dart';
 import './loginSociety.dart';
 import './userSignup.dart';
 
-final _formKey = GlobalKey<FormState>();
+class Keys{
+  static final key = const Key('key1');
+}
 //final  _key = GlobalKey<ScaffoldState>();
 class Login extends StatefulWidget {
 
@@ -38,7 +40,7 @@ class _LoginState extends State<Login> {
         ),
         child: SingleChildScrollView(
           child: Form(
-            key: _formKey,
+            key: Keys.key,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,6 +147,7 @@ class _LoginState extends State<Login> {
                     ),
                     Expanded(
                       child: new TextFormField(
+                           obscureText: true,
                         textAlign: TextAlign.center,
                         controller: _passcontroller,
                         decoration: new InputDecoration(
