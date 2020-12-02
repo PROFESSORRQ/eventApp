@@ -3,8 +3,8 @@
    // ignore: non_constant_identifier_names
    String society_name;
    String desc;
-   DateTime start;
-   DateTime end;
+   String start;
+   String end;
    //double budget;
    String loc;
    int number;

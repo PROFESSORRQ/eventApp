@@ -79,9 +79,9 @@ Widget builder(List event,BuildContext context){
            data = event[index].data();
            return Container(
                       margin: EdgeInsets.all(5.0),
-                      height: 150,
+                      height: 180,
                       child: Card(
-                        elevation: 10,
+                        elevation: 20,
                         child: Row(
                           children: [
                            Padding(
@@ -102,7 +102,12 @@ Widget builder(List event,BuildContext context){
                               new Text("${data['eventName']} by ${data['society']}",
                               style: new TextStyle(color: Colors.black87, fontSize: 16, fontFamily: "Poppins",fontWeight: FontWeight.bold)),
                               SizedBox(height: 10.0),
-                              new Text("Start Date : ${data['startDate']} and End Date: ${data['endDate']} ",
+                              new Text("Start Date : ${data['startDate']} ",
+                              style: new TextStyle(
+                                fontSize: 14,
+                              )),
+                                SizedBox(height: 10.0),
+                              new Text("End Date : ${data['endDate']} ",
                               style: new TextStyle(
                                 fontSize: 14,
                               )),

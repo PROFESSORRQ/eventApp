@@ -1,25 +1,43 @@
 import 'package:flutter/material.dart';
 import '../models/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-class EventAdd extends StatelessWidget {
+import 'package:date_time_picker/date_time_picker.dart';
+class EventAdd extends StatefulWidget {
   final Event1 newEvent;
  
   EventAdd({Key key, this.newEvent}) : super(key: key);
-   
+
+  @override
+  _EventAddState createState() => _EventAddState();
+}
+
+class _EventAddState extends State<EventAdd> {
     addData(){
 
 
       CollectionReference collectionReference = FirebaseFirestore.instance.collection('events');
-      collectionReference.add(newEvent.toJSON());
+      collectionReference.add(widget.newEvent.toJSON());
       
     }
+    DateTime _sdatetime = DateTime.now();
+    DateTime _edatetime = DateTime.now();
+  
+    
+       
+     
+    
+    
+  
+        
+     
+    
+    
   @override
   Widget build(BuildContext context) {
    TextEditingController _namecontroller = new TextEditingController();
       TextEditingController _desccontroller = new TextEditingController();
-         TextEditingController _sdatecontroller = new TextEditingController();
-            TextEditingController _edatecontroller = new TextEditingController();
+        // TextEditingController _sdatecontroller = new TextEditingController();
+          //  TextEditingController _edatecontroller = new TextEditingController();
                TextEditingController _controller = new TextEditingController();
                   // TextEditingController _spermicontroller = new TextEditingController();
                   //    TextEditingController _epermicontroller = new TextEditingController();
@@ -42,7 +60,7 @@ class EventAdd extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _namecontroller,
-              autofocus: true,
+              
               
               ),
             ),
@@ -53,7 +71,7 @@ class EventAdd extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _desccontroller,
-              autofocus: true,
+              
               
               ),
             ),
@@ -63,10 +81,11 @@ class EventAdd extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(30.0),
-              child: new TextFormField(controller: _sdatecontroller,
-              autofocus: true,
-               keyboardType: TextInputType.datetime,
-              ),
+              child: new RaisedButton(child: new Text("Enter Date", style: new TextStyle(fontFamily: "Poppins")),onPressed: ()async{
+                
+             DateTime _sdate = await showDatePicker(context: context, initialDate: _sdatetime, firstDate: DateTime(2020), lastDate: DateTime(2021));
+                _sdatetime = _sdate;
+              },)
 
             ),
             Padding(
@@ -75,10 +94,12 @@ class EventAdd extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(30.0),
-              child: new TextFormField(controller: _edatecontroller,
-              autofocus: true,
-              keyboardType: TextInputType.datetime,
-              ),
+             child: new RaisedButton(child: new Text("Enter Date", style: new TextStyle(fontFamily: "Poppins")),onPressed: ()async{
+               
+                    DateTime _edate = await showDatePicker(context: context, initialDate: _edatetime, firstDate: DateTime(2020), lastDate: DateTime(2022));
+                _edatetime = _edate;
+               
+              },)
             ),
              Padding(
                padding: const EdgeInsets.all(8.0),
@@ -87,7 +108,7 @@ class EventAdd extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _snamecontroller,
-              autofocus: true,
+              
               
               ),
             ),
@@ -99,7 +120,7 @@ class EventAdd extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _loccontroller,
-              autofocus: true,
+        
               
               ),
             ), Padding(
@@ -109,22 +130,44 @@ class EventAdd extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: new TextFormField(controller: _controller,
-              autofocus: true,
+         
               keyboardType: TextInputType.number,
               ),
             ),
             new SizedBox(height: 10.0),
-            new RaisedButton(child: new Text("Add"),onPressed: () {
-             newEvent.title = _namecontroller.text;
-             newEvent.desc = _desccontroller.text;
-             newEvent.society_name = _snamecontroller.text;
-             newEvent.number = int.parse(_controller.text);
-             newEvent.loc = _loccontroller.text;
+           SizedBox(
+                                      height: 50.0,
+                                      width: MediaQuery.of(context).size.width*0.65,
+                                      child: new RaisedButton(onPressed: (){
+                                            widget.newEvent.title = _namecontroller.text;
+             widget.newEvent.desc = _desccontroller.text;
+             widget.newEvent.society_name = _snamecontroller.text;
+             widget.newEvent.number = int.parse(_controller.text);
+             widget.newEvent.loc = _loccontroller.text;
+             widget.newEvent.end = _edatetime.toString();
+              widget.newEvent.start = _sdatetime.toString();
             // newEvent.start= _sdatecontroller.value as DateTime;
              //newEvent.end = _edatecontroller.value as DateTime;
               addData();
               
-            })
+              
+              showAlertDialog(context);
+                                      }
+                                      ,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(25.0),
+
+                                        ),
+
+                                        child: new Text("Submit", style: new TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.greenAccent,
+                                            fontFamily : "Poppins"
+                                        ),),
+                                        color: Colors.white,),
+                                    ),
+            
+            
           ],
         ),
      )); 
@@ -136,3 +179,28 @@ TextStyle styleop = new TextStyle(
   fontSize: 18,
   fontWeight: FontWeight.bold
 );
+showAlertDialog(BuildContext context) {
+
+  // set up the button
+  Widget okButton = FlatButton(
+    child: Text("OK"),
+    onPressed: () { Navigator.pop(context); },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Event Confirmation", style: TextStyle(color: Colors.greenAccent, fontFamily: "Poppins",)),
+    content: Text("Your Event request has been sent! Wait for the confirmation!",style: TextStyle( fontFamily: "Poppins",)),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
