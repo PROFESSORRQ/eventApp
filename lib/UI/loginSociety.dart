@@ -3,7 +3,7 @@ import '../views/Societyviews.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-final _formKey = GlobalKey<FormState>();
+
 class LoginSociety extends StatefulWidget {
   @override
   _LoginSocietyState createState() => _LoginSocietyState();
@@ -13,14 +13,16 @@ class _LoginSocietyState extends State<LoginSociety> {
   final TextEditingController _passcontroller = new TextEditingController();
 
   final TextEditingController _namecontroller = new TextEditingController();
-
+final _formKey = GlobalKey<FormState>();
+final globalkey = GlobalKey<ScaffoldState>();
+var error = "Error";
   @override
   final _firestore = FirebaseFirestore.instance;
   String email;
   String password;
   Widget build(BuildContext context) {
     return Scaffold(
-
+       key: globalkey,
         body: Container(
             height : MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
@@ -172,15 +174,25 @@ class _LoginSocietyState extends State<LoginSociety> {
                                       height: 50.0,
                                       width: MediaQuery.of(context).size.width*0.85,
                                       child: new RaisedButton(onPressed: (){
-                                        FirebaseAuth.instance.signInWithEmailAndPassword(
+                                    
+                                        if(_formKey.currentState.validate()){
+                                           FirebaseAuth.instance.signInWithEmailAndPassword(
                                             email: email,
                                             password: password)
                                             .then((FirebaseUser) {
                                           Navigator.push(context, MaterialPageRoute(builder: (context)=> SocietyView()));
                                         })
                                             .catchError((e){
-                                          print(e);
+                                              print(e);
+                                              setState((){
+                                                error = e.toString();
+                                              });
+                                          final snackBar = SnackBar(content: Text(error, style : new TextStyle(color: Colors.greenAccent, fontFamily: "Poppins")));
+                                          globalkey.currentState.showSnackBar(snackBar);
                                         });
+                                        }
+                                       _namecontroller.clear();
+                             _passcontroller.clear();  
                                          }
                                       ,
                                         shape: RoundedRectangleBorder(

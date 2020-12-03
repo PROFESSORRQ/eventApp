@@ -1,4 +1,5 @@
 
+import 'package:eventApp/UI/login.dart';
 import 'package:flutter/material.dart';
 import '../models/event.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -39,11 +40,11 @@ class _StudentViewState extends State<StudentView> {
         title: new Text("Events",
         style : new TextStyle( fontFamily: "Poppins")),
          actions: [
-           new IconButton(icon: new Icon(Icons.logout), onPressed: (){
+           new IconButton(icon: new Icon(Icons.arrow_back_ios), onPressed: (){
              // Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
              FirebaseAuth.instance.signOut()
                  .then((value){
-               Navigator.pop(context);
+               //Navigator.push(context,  MaterialPageRoute(builder: (context)=> Login()));
              })
                  .catchError((e){
                print(e);

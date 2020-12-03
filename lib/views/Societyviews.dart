@@ -1,4 +1,5 @@
 import 'package:eventApp/UI/eventadd.dart';
+import 'package:eventApp/views/RoomAvailability.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../models/event.dart';
@@ -43,7 +44,7 @@ class _SocietyViewState extends State<SocietyView> {
             Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
           }
           ),
-          new IconButton(icon: new Icon(Icons.logout), onPressed: (){
+          new IconButton(icon: new Icon(Icons.arrow_back_ios), onPressed: (){
            // Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
             FirebaseAuth.instance.signOut()
                 .then((value){
@@ -54,6 +55,9 @@ class _SocietyViewState extends State<SocietyView> {
             });
           }
           ),
+          new IconButton(icon: Icon(Icons.airline_seat_individual_suite), onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context)=> Room()));
+          })
         ],
       ),
       body: new Container(

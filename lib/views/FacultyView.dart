@@ -38,7 +38,7 @@ class _FacultyViewState extends State<FacultyView> {
         title: new Text("Events",
         style : new TextStyle(color: Colors.greenAccent, fontFamily: "Poppins")),
          actions: [
-           new IconButton(icon: new Icon(Icons.logout), onPressed: (){
+           new IconButton(icon: new Icon(Icons.arrow_back_ios), onPressed: (){
              // Navigator.push(context, MaterialPageRoute(builder: (context)=> EventAdd(newEvent: newevent,)));
              FirebaseAuth.instance.signOut()
                  .then((value){

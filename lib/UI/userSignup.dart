@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Keys{
   static final key = const Key('key1');
 }
+final globalkey = GlobalKey<ScaffoldState>();
 class SignUp extends StatefulWidget {
   @override
   _SignUpState createState() => _SignUpState();
@@ -23,11 +24,12 @@ class _SignUpState extends State<SignUp> {
 //  final FirebaseAuth _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
   String dropValue= "Student";
+  String error = "Error,check your entries again";
   String email;
   String password;
   Widget build(BuildContext context) {
     return Scaffold(
-
+        key: globalkey,
         body: Container(
             height : MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
@@ -228,8 +230,8 @@ class _SignUpState extends State<SignUp> {
                                               .then((value){
                                                 
                                                 if(signedInUser!=null && dropValue == "Student"){
-                                            //      showAlertDialog(context);
-                                              Navigator.push(context, MaterialPageRoute(builder: (context)=> Login()));
+                                            
+                                              Navigator.of(context).push(MaterialPageRoute(builder: (context)=> StudentView()));
                                               }
                                               else if(signedInUser!=null && dropValue == "Faculty"){
                                               
@@ -241,12 +243,23 @@ class _SignUpState extends State<SignUp> {
                                               }
                                               })
                                               .catchError((e){
-                                                print(e);
+                                                print(e);print(e);
+                                              setState((){
+                                                error = e.toString();
+                                              });
+                                          final snackBar = SnackBar(content: Text(error, style : new TextStyle(color: Colors.greenAccent, fontFamily: "Poppins")));
+                                          globalkey.currentState.showSnackBar(snackBar);
                                               })
                                               ;}
                                               )
                                                 .catchError((e){
                                                print(e);
+                                               print(e);
+                                              setState((){
+                                                error = e.toString();
+                                              });
+                                          final snackBar = SnackBar(content: Text(error, style : new TextStyle(color: Colors.greenAccent, fontFamily: "Poppins")));
+                                          globalkey.currentState.showSnackBar(snackBar);
                                            });
 
                                         },

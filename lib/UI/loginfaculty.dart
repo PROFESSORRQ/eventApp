@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 final _formKey = GlobalKey<FormState>();
+final globalkey = GlobalKey<ScaffoldState>();
+var error = "Error";
 class LoginFaculty extends StatefulWidget {
   @override
   _LoginFacultyState createState() => _LoginFacultyState();
@@ -19,7 +21,7 @@ class _LoginFacultyState extends State<LoginFaculty> {
    String password;
   Widget build(BuildContext context) {
     return Scaffold(
-
+  key: globalkey,
       body: Container(
         height : MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
@@ -172,15 +174,25 @@ class _LoginFacultyState extends State<LoginFaculty> {
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
                 child: new RaisedButton(onPressed: (){
-                  FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: email,
-                      password: password)
-                      .then((FirebaseUser) {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> FacultyView()));
-                  })
-                      .catchError((e){
-                    print(e);
-                  });
+                   if(_formKey.currentState.validate()){
+                                           FirebaseAuth.instance.signInWithEmailAndPassword(
+                                            email: email,
+                                            password: password)
+                                            .then((FirebaseUser) {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> FacultyView()));
+                                        })
+                                            .catchError((e){
+                                              print(e);
+                                              setState((){
+                                                error = e.toString();
+                                              });
+                                          final snackBar = SnackBar(content: Text(error, style : new TextStyle(color: Colors.deepPurpleAccent, fontFamily: "Poppins")));
+                                          globalkey.currentState.showSnackBar(snackBar);
+                                        });
+                                        }
+                                       
+                                        _namecontroller.clear();
+                             _passcontroller.clear();  
 
                 },
                 shape: RoundedRectangleBorder(

@@ -6,9 +6,9 @@ import './loginfaculty.dart';
 import './loginSociety.dart';
 import './userSignup.dart';
 
-class Keys{
-  static final key = const Key('key1');
-}
+final _formKey = GlobalKey<FormState>();
+final globalkey = GlobalKey<ScaffoldState>();
+var error = "Error";
 //final  _key = GlobalKey<ScaffoldState>();
 class Login extends StatefulWidget {
 
@@ -28,7 +28,7 @@ class _LoginState extends State<Login> {
   String password;
   Widget build(BuildContext context) {
     return Scaffold(
-
+       key: globalkey,
       body: Container(
         height : MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
@@ -40,12 +40,12 @@ class _LoginState extends State<Login> {
         ),
         child: SingleChildScrollView(
           child: Form(
-            key: Keys.key,
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              new SizedBox(height: MediaQuery.of(context).size.height*0.05,),
+              new SizedBox(height: MediaQuery.of(context).size.height*0.1,),
                new Container(
                  alignment: Alignment.center,
                  height: 150,
@@ -182,15 +182,24 @@ class _LoginState extends State<Login> {
                 height: 50.0,
                 width: MediaQuery.of(context).size.width*0.85,
                 child: new RaisedButton(onPressed: (){
-                        FirebaseAuth.instance.signInWithEmailAndPassword(
-                              email: email,
-                               password: password)
-                              .then((FirebaseUser) {
-                               Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
-                                    })
-                             .catchError((e){
-                                 print(e);
-                            });
+                        if(_formKey.currentState.validate()){
+                                           FirebaseAuth.instance.signInWithEmailAndPassword(
+                                            email: email,
+                                            password: password)
+                                            .then((FirebaseUser) {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
+                                        })
+                                            .catchError((e){
+                                              print(e);
+                                              setState((){
+                                                error = e.toString();
+                                              });
+                                          final snackBar = SnackBar(content: Text(error, style : new TextStyle(color: Colors.redAccent, fontFamily: "Poppins")));
+                                          globalkey.currentState.showSnackBar(snackBar);
+                                        });
+                                        }
+                             _namecontroller.clear();
+                             _passcontroller.clear();    
                  //Navigator.push(context, MaterialPageRoute(builder: (context)=> StudentView()));
                  }
                 ,
