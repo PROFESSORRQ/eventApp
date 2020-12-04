@@ -15,11 +15,12 @@ class _EventRequestState extends State<EventRequest> {
     
     CollectionReference collectionReference = FirebaseFirestore.instance.collection('events');
     collectionReference.where('eventPermi', isEqualTo: false).snapshots().listen((snapshots) { 
+     if(mounted){
       setState(() {
         eventss = snapshots.docs;
         print("${eventss[0]['eventName'].toString()}");
       });
-    });
+    }});
     
      
    }
@@ -27,8 +28,9 @@ class _EventRequestState extends State<EventRequest> {
   
   @override 
   void initState(){
-    fetchData();
+   
     super.initState();
+     fetchData();
   }
   @override
   Widget build(BuildContext context) {

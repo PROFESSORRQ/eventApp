@@ -16,11 +16,12 @@ class _FacultyViewState extends State<FacultyView> {
    Widget buildPageView(){
      return PageView(controller: pageController,
      onPageChanged: (index){
+       if(mounted){
       setState(() {
         _currentindex = index;
         print(_currentindex);
       });
-     },
+     }},
      children: [
        EventAccepted(),
        EventRequest(),
@@ -49,6 +50,7 @@ class _FacultyViewState extends State<FacultyView> {
              });
            }
            ),
+           
          ],
       ),
       body: buildPageView(),

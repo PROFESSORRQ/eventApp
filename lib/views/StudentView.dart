@@ -1,4 +1,5 @@
 
+import 'package:eventApp/UI/aboutus.dart';
 import 'package:eventApp/UI/login.dart';
 import 'package:flutter/material.dart';
 import '../models/event.dart';
@@ -35,6 +36,12 @@ class _StudentViewState extends State<StudentView> {
   Widget build(BuildContext context) {
     //final newevent = new Event1(null,null,null,null,false,false,null,null,null);
     return Scaffold(
+       floatingActionButton: FloatingActionButton(backgroundColor: Colors.redAccent,
+       onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUs()));
+       },
+       child: Icon(Icons.help),
+       ),
       appBar: new AppBar(
         backgroundColor: Colors.redAccent,
         title: new Text("Events",

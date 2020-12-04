@@ -17,19 +17,21 @@ class _SocietyViewState extends State<SocietyView> {
     
     CollectionReference collectionReference = FirebaseFirestore.instance.collection('events');
     collectionReference.where('eventPermi', isEqualTo: true).snapshots().listen((snapshots) { 
+      if(mounted){
       setState(() {
         eventss = snapshots.docs;
         print("${eventss[0]['eventName'].toString()}");
       });
-    });
+    }});
     
      
    }
   
   @override 
   void initState(){
-    fetchData();
+  
     super.initState();
+      fetchData();
   }
   @override
   Widget build(BuildContext context) {

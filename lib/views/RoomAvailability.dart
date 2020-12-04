@@ -14,6 +14,7 @@ List eventss;
     
     CollectionReference collectionReference = FirebaseFirestore.instance.collection('events');
     collectionReference.where('startDate', isEqualTo: date).snapshots().listen((snapshots) { 
+      
       setState(() {
         eventss = snapshots.docs;
         print("${eventss[0]['eventName'].toString()}");
@@ -24,8 +25,9 @@ List eventss;
    }
    @override 
   void initState(){
-    fetchData(_edatetime.toString());
+   
     super.initState();
+     fetchData(_edatetime.toString());
   }
   Widget build(BuildContext context) {
     return Scaffold(
